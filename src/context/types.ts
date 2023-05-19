@@ -13,7 +13,11 @@ export type ActionPayload<A, P> =
   | { type: A }
   | { type: A, payload: P }
 
+type Dispatch<A, P> = (action: ActionPayload<A, P>) => void;
+
 export type DispatchAsync = <Fn extends AnyFunc>(fn: Fn) => void;
+
+export type ActionAsync<A, P> = (dispatch: Dispatch<A, P>, state?: RootState) => void;
 
 export type ContextType = {
   state: RootState,
