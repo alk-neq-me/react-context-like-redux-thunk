@@ -1,4 +1,5 @@
 export type Todo = {
+  uuid: string,
   title: string,
   description: string,
   isCompleted: boolean

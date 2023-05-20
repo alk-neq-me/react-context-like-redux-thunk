@@ -42,8 +42,17 @@ const todoReducer: ReducerFunc<TodoActionEnum, Todo> = (state, action) => {
       /* Todo */
       return state;
     case "DELETE_TODOS_SUCCESS":
-      /* Todo */
-      return state;
+      return {
+        ...state,
+        todo: {
+          ...state.todo,
+          loading: false,
+          error: undefined,
+          rows: "payload" in action
+            ? state.todo.rows.filter(row => row.uuid !== action.payload.uuid) 
+            : state.todo.rows
+        }
+      };
 
     case "CREATE_TODOS_FAILURE":
     case "FETCH_TODOS_FAILURE": // GET

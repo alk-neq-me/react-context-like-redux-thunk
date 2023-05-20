@@ -1,41 +1,50 @@
 import { useCallback } from "react";
 import ContextProvider, { useStateContext } from "./context/contextProvider"
 import { Todo } from "./context/todo/types";
-import { createTodo } from "./context/todo/todoAction";
+import { createTodo, deleteTodo } from "./context/todo/todoAction";
 
+
+const getUniqueId = (rows: Todo[]) => {
+  const lastItem = rows[rows.length-1];
+  if (lastItem) return `${parseInt(lastItem.uuid) + 1}`;
+  return "0";
+}
 
 function TodoList() {
   const { state, dispatch } = useStateContext();
-
   const { rows, error, loading } = state.todo;
 
-  const createaTodo = useCallback(() => {
+  const handleCeateaTodo = useCallback(() => {
     const todo: Todo = {
-      title: "new",
+      uuid: getUniqueId(rows),
+      title: `todo ${getUniqueId(rows)}`,
       description: "test",
       isCompleted: false
     };
 
     dispatch(createTodo(todo));
-  }, []);
+  }, [dispatch, getUniqueId]);
+
+  const handleDeleteTodo = (todo: Todo) => () => {
+    dispatch(deleteTodo(todo));
+  };
 
   if (error) return (
     <pre>{error}</pre>
   )
 
-  if (loading) return (
-    <h5>Loading...</h5>
-  )
-
   return (
     <>
       {rows.map((todo: Todo) => (
-        <div>{todo.title}</div>
+        <div>{todo.title}
+          <button onClick={handleDeleteTodo(todo)}>del</button>
+        </div>
       ))}
       <button
-        onClick={createaTodo}
+        onClick={handleCeateaTodo}
+        disabled={loading}
       >
-        add
+        {loading ? "loading..." : "add"}
       </button>
     </>
   )

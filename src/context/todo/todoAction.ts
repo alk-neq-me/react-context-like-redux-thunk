@@ -18,3 +18,10 @@ export function createTodo(todo: Todo): ActionAsync<TodoActionEnum, Todo|string>
     // dispatch({ type: "CREATE_TODOS_FAILURE", payload: "unknow error" });
   };
 }
+
+
+export function deleteTodo(todo: Todo): ActionAsync<TodoActionEnum, Todo> {
+  return async (dispatch) => {
+    dispatch({ type: "DELETE_TODOS_SUCCESS", payload: todo });
+  }
+}
