@@ -2,10 +2,14 @@ import { createContext, useContext } from "react";
 import { AnyFunc, ContextType, RootState } from "./types";
 import { useReducer } from "react";
 import todoReducer, { todoInitialState } from "./todo/todoReducer";
+import { ItemsInitialState } from "./Items/itemReducer";
+import { orderInitiaState } from "./Order/orderReducer";
 
 
 const initialState: RootState = {
   todo: todoInitialState,
+  items: ItemsInitialState,
+  order: orderInitiaState,
 }
 
 

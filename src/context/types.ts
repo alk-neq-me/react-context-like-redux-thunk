@@ -1,10 +1,14 @@
+import { ItemState } from "./Items/types";
+import { OrderState } from "./Order/types";
 import { TodoState } from "./todo/types";
 
 
 export type AnyFunc = (...args: any[]) => any;
 
 export type RootState = {
-  todo: TodoState
+  todo: TodoState,
+  items: ItemState,
+  order: OrderState,
 };
 
 export type ReducerFunc<A, P> = (state: RootState, action: ActionPayload<A, P>) => RootState;
